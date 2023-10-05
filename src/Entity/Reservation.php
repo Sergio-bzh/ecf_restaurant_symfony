@@ -41,7 +41,7 @@ class Reservation
     #[ORM\ManyToMany(targetEntity: Allergie::class, mappedBy: 'reservations')]
     private Collection $allergies;
 
-    #[ORM\ManyToOne(inversedBy: 'reservation')]
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $user = null;
 
     public function __construct()
