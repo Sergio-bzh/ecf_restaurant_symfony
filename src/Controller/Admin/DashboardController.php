@@ -2,8 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Allergie;
+use App\Entity\Category;
+use App\Entity\Dish;
+use App\Entity\Formula;
+use App\Entity\Menu;
 use App\Entity\Restaurant;
 use App\Entity\Schedule;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -46,6 +52,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Restaurant', 'fa fa-list', Restaurant::class);
         yield MenuItem::linkToCrud('Schedule', 'fa fa-list', Schedule::class);
+        yield MenuItem::linkToCrud('User', 'fa fa-list', User::class);
+        yield MenuItem::linkToCrud('Category', 'fa fa-list', Category::class);
+        yield MenuItem::linkToCrud('Menu', 'fa fa-list', Menu::class);
+        yield MenuItem::linkToCrud('Allergie', 'fa fa-list', Allergie::class);
+        yield MenuItem::linkToCrud('Dish', 'fa fa-list', Dish::class);
+        yield MenuItem::linkToCrud('Formula', 'fa fa-list', Formula::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
