@@ -18,6 +18,7 @@ class ReservationCrudController extends AbstractCrudController
         yield from parent::configureFields(($pageName));
         yield AssociationField::new('user');
         yield AssociationField::new('restaurant');
+        yield AssociationField::new('allergies');
     }
     /*
     public function configureFields(string $pageName): iterable
