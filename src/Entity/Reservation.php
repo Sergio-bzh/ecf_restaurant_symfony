@@ -38,11 +38,14 @@ class Reservation
     #[ORM\Column]
     private ?bool $allergie = null;
 
-    #[ORM\ManyToMany(targetEntity: Allergie::class, mappedBy: 'reservations')]
-    private Collection $allergies;
+//    #[ORM\ManyToMany(targetEntity: Allergie::class, mappedBy: 'reservations')]
+//    private Collection $allergies;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'reservations')]
+    private Collection $allergies;
 
     public function __construct()
     {
@@ -138,10 +141,10 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Allergie>
-     */
-    public function getAllergies(): Collection
+//    /**
+//     * @return Collection<int, Allergie>
+//     */
+/*    public function getAllergies(): Collection
     {
         return $this->allergies;
     }
@@ -164,7 +167,7 @@ class Reservation
 
         return $this;
     }
-
+*/
     public function getUser(): ?User
     {
         return $this->user;
@@ -173,6 +176,30 @@ class Reservation
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Allergie>
+     */
+    public function getAllergies(): Collection
+    {
+        return $this->allergies;
+    }
+
+    public function addAllergy(Allergie $allergy): static
+    {
+        if (!$this->allergies->contains($allergy)) {
+            $this->allergies->add($allergy);
+        }
+
+        return $this;
+    }
+
+    public function removeAllergy(Allergie $allergy): static
+    {
+        $this->allergies->removeElement($allergy);
 
         return $this;
     }

@@ -15,8 +15,8 @@ class Allergie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Reservation::class, inversedBy: 'allergies')]
-    private Collection $reservations;
+//    #[ORM\ManyToMany(targetEntity: Reservation::class, inversedBy: 'allergies')]
+//    private Collection $reservations;
 
     #[ORM\Column(length: 50)]
     private ?string $title = null;
@@ -24,9 +24,12 @@ class Allergie
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'allergies')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'allergies')]
+    private Collection $reservations;
+
     public function __construct()
     {
-        $this->reservations = new ArrayCollection();
+//        $this->reservations = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -35,10 +38,10 @@ class Allergie
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Reservation>
-     */
-    public function getReservations(): Collection
+//    /**
+//     * @return Collection<int, Reservation>
+//     */
+/*    public function getReservations(): Collection
     {
         return $this->reservations;
     }
@@ -58,7 +61,7 @@ class Allergie
 
         return $this;
     }
-
+*/
     public function getTitle(): ?string
     {
         return $this->title;
@@ -97,10 +100,36 @@ class Allergie
 
         return $this;
     }
-    /*
+
     public function __toString(): string
     {
         return $this->getTitle();
-        // TODO: Implement __toString() method.
-    }*/
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->addAllergy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            $reservation->removeAllergy($this);
+        }
+
+        return $this;
+    }
 }

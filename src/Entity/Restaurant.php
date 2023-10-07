@@ -212,6 +212,5 @@ class Restaurant
     public function __toString(): string
     {
         return $this->getRestaurantName();
-        // TODO: Implement __toString() method.
     }
 }

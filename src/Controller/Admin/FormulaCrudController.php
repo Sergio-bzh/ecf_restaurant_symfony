@@ -17,5 +17,6 @@ class FormulaCrudController extends AbstractCrudController
     {
         yield from parent::configureFields(($pageName));
         yield AssociationField::new('menu');
+        yield AssociationField::new('dish');
     }
 }

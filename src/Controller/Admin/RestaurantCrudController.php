@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Restaurant;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class RestaurantCrudController extends AbstractCrudController
 {
@@ -12,14 +13,9 @@ class RestaurantCrudController extends AbstractCrudController
         return Restaurant::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        yield from parent::configureFields(($pageName));
+        yield AssociationField::new('menus');
     }
-    */
 }
