@@ -6,6 +6,7 @@ use App\Entity\Allergie;
 use App\Entity\Category;
 use App\Entity\Dish;
 use App\Entity\Formula;
+use App\Entity\Image;
 use App\Entity\Menu;
 use App\Entity\Reservation;
 use App\Entity\Restaurant;
@@ -60,6 +61,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Dish', 'fa fa-list', Dish::class);
         yield MenuItem::linkToCrud('Formula', 'fa fa-list', Formula::class);
         yield MenuItem::linkToCrud('Reservation', 'fa fa-list', Reservation::class);
+        yield MenuItem::linkToCrud('Image', 'fa fa-list', Image::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
