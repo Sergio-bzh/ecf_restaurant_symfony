@@ -9,10 +9,8 @@
         </div>
 
         <div>
-            {% for day in daysOfWeek %}
-                <li>{{ day }} :
-                    {{ morning[loop.index0] }} -
-                    {{ afternoon[loop.index0] }}</li>
+            {% for schedule in schedules %}
+                <li>{{ schedule }} </li>
             {% endfor %}
         </div>
 
