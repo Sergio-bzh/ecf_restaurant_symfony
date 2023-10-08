@@ -11,7 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[
+        Route('/', 'app_home'),
+        Route('/accueil', 'app_home_alt')
+    ]
     //#[Route('/home', name: 'app_home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -27,14 +30,17 @@ class HomeController extends AbstractController
 
         foreach ($shedules as $shedule) {
             if($shedule->getServiceType() == 'Midi') {
-                $morning = $shedule->getServiceStart()->format('H:i'). ' - ' . $shedule->getServiceEnd()->format('H:i');
+                $morning[$shedule->getDayOfWeek()] = $shedule->getServiceStart()->format('H:i'). ' - ' . $shedule->getServiceEnd()->format('H:i');
             } else {
-                $afternoon =$shedule->getServiceStart()->format('H:i'). ' - ' . $shedule->getServiceEnd()->format('H:i');
+                $afternoon[$shedule->getDayOfWeek()] =$shedule->getServiceStart()->format('H:i'). ' - ' . $shedule->getServiceEnd()->format('H:i');
             }
         }
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'daysOfWeek' => $daysOfWeek,
+            'morning' => $morning,
+            'afternoon' => $afternoon,
         ]);
     }
 }

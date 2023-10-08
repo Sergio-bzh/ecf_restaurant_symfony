@@ -1,5 +1,4 @@
-{% extends 'base.html.twig' %}
-{% block footer %}
+
 <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
@@ -10,11 +9,11 @@
         </div>
 
         <div>
-            {% if daysOfWeek %}
-                {% for day in daysOfWeek %}
-                    <li>{{ day }} : {{ morning[loop.index] }} - {{ afternon[loop.index] }}</li>
-                {% endfor %}
-            {% endif %}
+            {% for day in daysOfWeek %}
+                <li>{{ day }} :
+                    {{ morning[loop.index0] }} -
+                    {{ afternoon[loop.index0] }}</li>
+            {% endfor %}
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -24,4 +23,4 @@
         </ul>
     </footer>
 </div>
-{% endblock %}
+
