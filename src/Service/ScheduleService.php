@@ -35,7 +35,7 @@ class ScheduleService
 
         foreach ($daysOfWeek as $index => $day)
         {
-            $this->schedules = $day.': '. $morning[$index] . ' - ' . $afternoon[$index];
+            $this->schedules[] = $day .': '. $morning[$index] . ' - ' . $afternoon[$index];
         }
     }
 }
