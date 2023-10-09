@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-    <header class="d-flex align-items-center justify-content-center justify-content-md-between mt-3">
+    <header class="d-flex align-items-center justify-content-center justify-content-md-between mt-3 m-lg-5 p-5">
         <div class="col-1 m-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <img class="bi" width="80" height="80" role="img" src="{{ asset('images/assets/ECF_Resto-logo.png') }}" alt="Logo">
@@ -8,11 +8,11 @@
             </a>
         </div>
 
-        <div class="col-9 text-center">
+        <div class="col-9 text-center col-lg-6">
             <h1 class="d-inline-block">Le Quai Antique</h1>
         </div>
 
-        <div class="input-group mb-3 end">
+        <div class="input-group mb-3 d-lg-none">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Navigation</button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/accueil">Accueil</a></li>
@@ -21,15 +21,15 @@
             </ul>
         </div>
 
-<!--
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/accueil" class="nav-link px-2 link-secondary">Accueil</a></li>
-            <li><a href="#" class="nav-link px-2">La carte</a></li>
-            <li><a href="#" class="nav-link px-2">Menu gastronomique</a></li>
-            <li><a href="#" class="nav-link px-2">Réserver</a></li>
+
+        <ul class="d-none d-lg-inline-flex nav col-6 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/accueil" class="nav-link px-3 link-secondary">Accueil</a></li>
+            <li><a href="#" class="nav-link px-3">La carte</a></li>
+            <li><a href="#" class="nav-link px-3">Menu gastronomique</a></li>
+            <li class="d-none" ><a href="#" class="nav-link px-3">Réserver</a></li>
         </ul>
--->
-        <div class="d-none d-lg-flex col-md-3 text-end">
+
+        <div class="d-none d-lg-flex col-md-3 text-end px-lg-4">
             <button onclick="location.href='/login'" type="button" class="btn btn-outline-primary me-2">Login</button>
             <button type="button" class="btn btn-primary">S'inscrire</button>
         </div>
