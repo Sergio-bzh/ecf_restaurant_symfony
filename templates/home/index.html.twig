@@ -3,18 +3,21 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container-fluid">
+    <div class="d-block mx-5">
+        <h2 class="text-center">Bienvenue au Quai antique</h2>
+    </div>
+    <div class="d-block d-lg-flex">
+        <div class="text-center" ><img class="col-11" src="{{ asset('images/assets/ECF_Resto_vue_mer.png') }}" alt="image du restaurant"></div>
+        <div class="mx-5">
+            <p class="text-center m-1">Le Quai Antique s'inscrit dans la tradition culinaire régionale française en épousant les senteurs de nos contrées lointaines et en s'ouvrant aux saveurs et délicatesses d'ailleurs.</p>
+        </div>
+        <div class="text-center"><img class="col-11" src="{{ asset('images/assets/ECF-Cave.jpeg') }}" alt="image cave à vin"></div>
+        <div class="mx-5">
+            <p class="text-center m-1" >Nous avons cumulé avec le temps les vins les plus fins du terroir français. Nos caves sont enrichies des grands crus issus des plus grands vignobles nationaux et du monde.</p>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/sergionunez/work-space/PHP_cours/ecf_restaurant_symfony/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/sergionunez/work-space/PHP_cours/ecf_restaurant_symfony/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}
