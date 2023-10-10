@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 13)]
     private ?string $phone_number = null;
 
-    #[ORM\ManyToMany(targetEntity: Allergie::class)]
+    #[ORM\ManyToMany(targetEntity: Allergie::class, inversedBy: 'users')]
     private Collection $allergies;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
