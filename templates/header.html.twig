@@ -29,9 +29,20 @@
             <li class="d-none" ><a href="#" class="nav-link px-3">Réserver</a></li>
         </ul>
 
+      {#  {% if app.user %}
+            <div class="mb-3">
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+        {% endif %} #}
+
+
         <div class="d-none d-lg-flex col-md-3 text-end px-lg-4">
-            <button onclick="location.href='/login'" type="button" class="btn btn-outline-primary me-2">Login</button>
-            <button type="button" class="btn btn-primary">S'inscrire</button>
+            {% if not app.user %}
+                <button onclick="location.href='/login'" type="button" class="btn btn-outline-primary me-2">Se connecter</button>
+                <button type="button" class="btn btn-primary">S'inscrire</button>
+                {% else %}
+                <button onclick="location.href='{{ path('app_logout') }}'" type="button" class="btn btn-outline-danger me-2">Se déconnecter</button>
+            {% endif %}
         </div>
     </header>
 </div>
