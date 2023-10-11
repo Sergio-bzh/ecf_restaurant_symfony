@@ -44,6 +44,15 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+        $roles = $user->getRoles();
+
+    // Penser à changer le nom de la route vers réservation une fois la page construite
+
+        if (!in_array('ROLE_ADMIN', $roles)) {
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
