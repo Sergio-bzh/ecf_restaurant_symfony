@@ -5,11 +5,11 @@ namespace App\Form;
 use App\Entity\Allergie;
 use App\Entity\Reservation;
 use App\Entity\User;
-use Cassandra\Type\UserType;
 use Doctrine\ORM\Query\Expr\Select;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -29,7 +29,7 @@ class ReservationType extends AbstractType
               'attr' => [
                   'class' => 'form-control mb-3',
               ],
-              'label' => 'Nom :',
+              'label' => 'Nom',
               'required' => true
             ])
 
@@ -37,7 +37,7 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'label' => 'Téléphone :',
+                'label' => 'N° Téléphone',
                 'required' => true
             ])
 
@@ -45,23 +45,7 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'label' => 'Nombre de convives :',
-                'required' => true
-            ])
-
-            ->add('reservation_date', DateType::class, [
-                'attr' => [
-                    'class' => 'form-control mb-3'
-                ],
-                'label' => 'Date de réservation :',
-                'required' => true
-            ])
-
-            ->add('meal_time', TimeType::class, [
-                'attr' => [
-                    'class' => 'form-control mb-3'
-                ],
-                'label' => 'Heure :',
+                'label' => 'Nombre de couverts :',
                 'required' => true
             ])
 
@@ -69,9 +53,56 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-check mb-3'
                 ],
-                'label' => 'Allergie :',
+                'label' => 'Allergie',
                 'required' => true
             ])
+
+            //->add('allergies')
+
+// ATTENTION =======> Le choix multiple ne fonctionne PAS !!
+
+           ->add('allergies', EntityType::class, [
+                'class' => Allergie::class,
+                'attr' => [
+                    'class' => 'form-select mb-3'
+                ],
+                'label' => 'Allergies',
+                'required' => true
+            ])
+
+            ->add('reservation_date', DateType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ],
+                'label' => 'Date',
+                'required' => true
+            ])
+
+            ->add('service', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ],
+                'label' => 'Service',
+                'required' => true
+            ])
+
+            ->add('meal_time', TimeType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ],
+                'label' => 'Heure',
+                'required' => true
+            ])
+
+            ->add('validation', ButtonType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary mb-3'
+                ],
+                'label' => 'Valider',
+            ])
+
+
+
 /*
             ->add('restaurant', ChoiceType::class, [
                 'attr' => [
@@ -93,15 +124,6 @@ class ReservationType extends AbstractType
                 'required' => true
             ])
 */
-
-            ->add('allergies', EntityType::class, [
-                'class' => Allergie::class,
-                'attr' => [
-                    'class' => 'form-select mb-3'
-                ],
-                'label' => 'Allergie :',
-                'required' => true
-            ])
 
             //->add('client_name')
             //->add('phone_number')
