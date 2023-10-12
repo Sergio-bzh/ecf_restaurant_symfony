@@ -7,17 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class ReservationController extends AbstractController
 {
-    #[
-        Route('/', 'app_home'),
-        Route('/accueil', 'app_home_alt')
-    ]
-    //#[Route('/home', name: 'app_home')]
+    #[Route('/reservation', name: 'app_reservation')]
     public function index(ScheduleService $scheduleService): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        return $this->render('reservation/index.html.twig', [
+            'controller_name' => 'ReservationController',
             'schedules' => $scheduleService->getSchedules()
         ]);
     }
