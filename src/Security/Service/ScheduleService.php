@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Security\Service;
 
 use App\Entity\Schedule;
 use Doctrine\ORM\EntityManagerInterface;
