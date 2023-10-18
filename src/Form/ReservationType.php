@@ -13,7 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -33,7 +35,7 @@ class ReservationType extends AbstractType
               'required' => true
             ])
 
-            ->add('phone_umber', TelType::class, [
+            ->add('phone_number', TelType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
@@ -41,17 +43,11 @@ class ReservationType extends AbstractType
                 'required' => true
             ])
 
-            ->add('guest_number', IntegerType::class, [
-                'attr' => [
-                    'class' => 'form-control mb-3'
-                ],
-                'label' => 'Nombre de couverts :',
-                'required' => true
-            ])
-
             ->add('allergie', CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-check mb-3'
+                    'class' => 'form-check mb-3',
+                    'id' => 'reservation_allergie',
+                    'onChange' => 'toggleAllergies();'
                 ],
                 'label' => 'Allergie',
                 'required' => true
@@ -64,9 +60,19 @@ class ReservationType extends AbstractType
            ->add('allergies', EntityType::class, [
                 'class' => Allergie::class,
                 'attr' => [
-                    'class' => 'form-select mb-3'
+                    'class' => 'form-select mb-3',
+                    'id' => 'reservation_allergies'
                 ],
                 'label' => 'Allergies',
+                'required' => true,
+                'multiple' => true
+            ])
+
+            ->add('guest_number', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ],
+                'label' => 'Nombre de couverts :',
                 'required' => true
             ])
 
@@ -78,13 +84,15 @@ class ReservationType extends AbstractType
                 'required' => true
             ])
 
-            ->add('service', TextType::class, [
+            ->add('service', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-control mb-3'
+                    'class' => 'form-select mb-3'
                 ],
-                'label' => 'Service',
-                'required' => true
+                'choices' => [
+            'Midi' => true,
+            'Soir' => false]
             ])
+
 
             ->add('meal_time', TimeType::class, [
                 'attr' => [
@@ -94,7 +102,7 @@ class ReservationType extends AbstractType
                 'required' => true
             ])
 
-            ->add('validation', ButtonType::class, [
+            ->add('validation', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mb-3'
                 ],
