@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use App\DQL\DatetimeFunction;
 
 /**
  * @extends ServiceEntityRepository<Reservation>
@@ -22,21 +24,16 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
-    /**
-     * @return Reservation[] Returns an array of Reservation objects
-     */
-    public function findCreneauFields($day, $serviceType): array
+    public function findCreneauFields($day, $serviceType, EntityManager $entityManager): array
     {
-        return $this->createQueryBuilder('r')
-            ->select('hour(r.meal_time) AS heure_repas', '(minute(r.meal_time) DIV 15) AS quart_heure', 'r.reservation_date', 'SUM(r.guest_number) AS places_reservees' )
-            ->join('schedule', 's', Join::ON, 'day_of_week = WEEKDAY(r.reservation_date)')
-
-            ->andWhere('r.meal_time = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
+        $query = $entityManager->createQuery('SELECT hour(meal_time) AS heure_repas,  (minute(meal_time) DIV 15) AS quart_heure, reservation_date AS date, SUM(guest_number) AS convives
+        FROM reservation
+        JOIN schedule ON day_of_week = WEEKDAY(reservation_date) AND meal_time BETWEEN service_start AND service_end
+        WHERE day_of_week = WEEKDAY(?1) AND service_type = ?2
+        GROUP BY reservation_date, heure_repas, quart_heure');
+        $query->setParameter(1, $day);
+        $query->setParameter(2, $serviceType);
+        return $query->getResult();
     }
 
     //    public function findOneBySomeField($value): ?Reservation
