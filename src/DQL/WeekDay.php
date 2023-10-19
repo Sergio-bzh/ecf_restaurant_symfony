@@ -6,9 +6,9 @@ use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Lexer;
 
 /**
- * HourFunction ::= "HOUR" "(" ArithmeticPrimary ")"
+ * WeekDayFunction ::= "WeekDay" "(" ArithmeticPrimary ")"
  */
-class Hour extends FunctionNode
+class WeekDay extends FunctionNode
 {
     // (1)
     public $dateExpression = null;
@@ -23,7 +23,7 @@ class Hour extends FunctionNode
 
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
-        return 'Hour(' .
+        return 'Weekday(' .
             $this->dateExpression->dispatch($sqlWalker) .
             ')'; // (7)
     }

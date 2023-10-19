@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TimeSliceController extends AbstractController
 {
     #[Route('/api/timeSlice', name: 'app_time_slice')]
-    public function index(): JsonResponse
+    public function index(ReservationRepository $reservationRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         $creneaux = [
             "var" => "Truc",
         ];
+        $creneaux = $reservationRepository->findCreneauFields('2023-10-07', 'Midi', $entityManager);
+
         /* return new JsonResponse(
             $creneaux,
             Response::HTTP_OK,
