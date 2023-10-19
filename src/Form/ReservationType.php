@@ -88,6 +88,7 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-select mb-3'
                 ],
+                'mapped' => false,
                 'choices' => [
             'Midi' => true,
             'Soir' => false]
