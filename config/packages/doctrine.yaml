@@ -20,6 +20,16 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            datetime_functions:
+                Hour: App\DQL\Hour
+                Minute: App\DQL\Minute
+                Div: App\DQL\Div
+                Weekday: App\DQL\WeekDay
+                Round: App\DQL\Round
+                Floor: App\DQL\Floor
+                QuarterTime: App\DQL\QuarterTime
+                Creneau: App\DQL\Creneau
 
 when@test:
     doctrine:
