@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ScheduleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,12 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TimeSliceController extends AbstractController
 {
     #[Route('/api/timeSlice', name: 'app_time_slice')]
-    public function index(ReservationRepository $reservationRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function index(ReservationRepository $reservationRepository, EntityManagerInterface $entityManager, ScheduleRepository $scheduleRepository): JsonResponse
     {
+        $date = strtotime($_GET['date']);
+        $parse = date_parse($date);
+
+        $day_of_week = jddayofweek(gregoriantojd($parse['month'],$parse['day'], $parse['year']));
+        $schedule = $scheduleRepository->findOneBy(['day_of_week' => $day_of_week === 0 ? 6 : $day_of_week-1, 'service_type' => $_GET['service']]);
+        $reservation = $reservationRepository->findCreneauFields($_GET['date'], $_GET['service'], $entityManager);
         $creneaux = [
-            "var" => "Truc",
+            'service_start' => $schedule->getServiceStart(),
+            'service_end' => $schedule->getServiceEnd(),
+            'creneaux' => $reservation
         ];
-        $creneaux = $reservationRepository->findCreneauFields('2023-10-07', 'Midi', $entityManager);
 
         /* return new JsonResponse(
             $creneaux,

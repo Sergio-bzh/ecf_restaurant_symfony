@@ -78,28 +78,31 @@ class ReservationType extends AbstractType
 
             ->add('reservation_date', DateType::class, [
                 'attr' => [
-                    'class' => 'form-control mb-3'
+                    'class' => 'form-control mb-3',
+                    'onChange' => 'getCreneaux();'
                 ],
+                'widget' => 'single_text',
                 'label' => 'Date',
                 'required' => true
             ])
 
             ->add('service', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-select mb-3'
+                    'class' => 'form-select mb-3',
+                    'onChange' => 'getCreneaux();'
                 ],
                 'mapped' => false,
                 'choices' => [
-            'Midi' => true,
-            'Soir' => false]
+            'Midi' => 'Midi',
+            'Soir' => 'Soir']
             ])
 
 
-            ->add('meal_time', TimeType::class, [
+            ->add('meal_time', ChoiceType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'label' => 'Heure',
+                'label' => 'Creneaux',
                 'required' => true
             ])
 
