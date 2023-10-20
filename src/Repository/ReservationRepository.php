@@ -32,7 +32,7 @@ class ReservationRepository extends ServiceEntityRepository
         SUM(r.guest_number) AS places_reservees
         FROM App\Entity\Reservation r
         JOIN App\Entity\Schedule s WHERE s.day_of_week = WEEKDAY(r.reservation_date) AND r.meal_time BETWEEN s.service_start AND s.service_end
-        AND s.day_of_week = WEEKDAY(?1) AND s.service_type = ?2
+        AND s.day_of_week = WEEKDAY(?1) AND s.service_type = ?2 AND (?1)=(r.reservation_date)
         GROUP BY heure, quart_heure');
         $query->setParameter(1, $day);
         $query->setParameter(2, $serviceType);

@@ -18,13 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
-    public function index(ScheduleService $scheduleService,AllergieRepository $allergieRepository ,RestaurantRepository $restaurantRepository ,ReservationRepository $reservationRepository, Request $request, EntityManagerInterface  $em): Response
+    public function index(ScheduleService $scheduleService,AllergieRepository $allergieRepository,
+        RestaurantRepository $restaurantRepository, ReservationRepository $reservationRepository,
+        Request $request, EntityManagerInterface  $em): Response
     {
         $form = $this->createForm(ReservationType::class);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
+
                 $reservation = new Reservation();
                 $reservation->setRestaurant($restaurantRepository->findOneBy(['restaurant_name' => 'Le Quai Antique']));
                 $reservation->setClientName($form->get('client_name')->getData());
