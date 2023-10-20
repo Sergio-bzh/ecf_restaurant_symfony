@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReservationController!{% endblock %}
+{% block title %}Reservation{% endblock %}
 
 {% block body %}
 <style>
@@ -11,7 +11,42 @@
 <div class="example-wrapper">
     <h1 class="mb-4">Réservation</h1>
 
-    {{ form(form) }}
+
+    {{ form_start(form) }}
+        <div class="d-lg-flex col row-cols-lg-2">
+            <div class="ms-1 me-1">
+                {{ form_label(form.client_name) }}
+                {{ form_widget(form.client_name) }}
+                {{ form_label(form.phone_number) }}
+                {{ form_widget(form.phone_number) }}
+                {{ form_label(form.allergie) }}
+                {{ form_widget(form.allergie) }}
+                <div id="allergies_list">
+                    {{ form_label(form.allergies) }}
+                    {{ form_widget(form.allergies) }}
+                </div>
+
+            </div>
+
+            <div class="ms-3 me-3>
+                {{ form_label(form.guest_number) }}
+                {{ form_widget(form.guest_number) }}
+                {{ form_label(form.reservation_date) }}
+                {{ form_widget(form.reservation_date) }}
+                {{ form_label(form.service) }}
+                {{ form_widget(form.service) }}
+                {{ form_label(form.meal_time) }}
+                {{ form_widget(form.meal_time) }}
+
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.validation) }}
+            {{ form_widget(form.validation) }}
+
+        </div>
+    {{ form_end(form) }}
 
 </div>
 {% endblock %}
