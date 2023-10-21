@@ -9,6 +9,7 @@ use App\Repository\AllergieRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\RestaurantRepository;
 use App\Security\Service\ScheduleService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,16 +35,16 @@ class ReservationController extends AbstractController
                 $reservation->setPhoneNumber($form->get('phone_number')->getData());
                 $reservation->setGuestNumber($form->get('guest_number')->getData());
                 $reservation->setReservationDate($form->get('reservation_date')->getData());
-                $reservation->setMealTime($form->get('meal_time')->getData());
+                $meal_time = str_replace(' ', '', $form->get('meal_time')->getData());
+                $date = new DateTimeImmutable($meal_time);
+                dd($date, '< ==================================================== >');
+//                echo $date->format('Y-m-d H:i:s');
+                $reservation->setMealTime($date);
                 $reservation->setAllergie($form->get('allergie')->getData());
-                //dd($form->get('allergies'));
-                //dd($form);
+
                 foreach ($form->get('allergies')->getData() as $formAllergie){
-                    //$allergie = new Allergie();
-                    //$allergie->setTitle($formAllergie);
                     $reservation->addAllergy($formAllergie);
                 }
-                //$reservationRepository->add($reservation);
                 $em->persist($reservation);
                 $em->flush();
                 //return $this->redirectToRoute(‘comment_list’);
