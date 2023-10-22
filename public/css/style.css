@@ -9,11 +9,6 @@ body {
     margin-top: auto;
 }
 
-.toto {
+#allergies_list, #reservation_meal_time option {
     display: none;
 }
-
-/*
-#reservation_meal_time option {
-    display: none;
-}*/
