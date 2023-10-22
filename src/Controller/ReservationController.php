@@ -27,10 +27,10 @@ class ReservationController extends AbstractController
         $allCreneaux = [];
         $allCreneaux[''] = '';
         for ($hour = 0 ; $hour <= 23; $hour++) {
-            $allCreneaux[$hour.':00'] = $hour.':0';
-            $allCreneaux[$hour.':15'] = $hour.':1';
-            $allCreneaux[$hour.':30'] = $hour.':2';
-            $allCreneaux[$hour.':45'] = $hour.':3';
+            $allCreneaux[$hour.':00'] = $hour.':00';
+            $allCreneaux[$hour.':15'] = $hour.':15';
+            $allCreneaux[$hour.':30'] = $hour.':30';
+            $allCreneaux[$hour.':45'] = $hour.':45';
         }
 
 // L'option allCreneaux contient les options qui sont injectées dans le champs "meal_time" du ReservationType.php
@@ -38,20 +38,19 @@ class ReservationController extends AbstractController
         $form = $this->createForm(ReservationType::class,null, ['allCreneaux' => $allCreneaux]);
 
         if ($request->isMethod('POST')) {
-            dd($request, '< ==================================================== >');
             $form->handleRequest($request);
-            if ($form->isSubmitted()) {
 
+            if ($form->isSubmitted()) {
                 $reservation = new Reservation();
                 $reservation->setRestaurant($restaurantRepository->findOneBy(['restaurant_name' => 'Le Quai Antique']));
                 $reservation->setClientName($form->get('client_name')->getData());
                 $reservation->setPhoneNumber($form->get('phone_number')->getData());
                 $reservation->setGuestNumber($form->get('guest_number')->getData());
                 $reservation->setReservationDate($form->get('reservation_date')->getData());
-                $meal_time = str_replace(' ', '', $form->get('meal_time')->getData());
-                $date = new DateTimeImmutable($meal_time);
-//                echo $date->format('Y-m-d H:i:s');
+
+                $date = date_create_from_format('H:i', $form->get('meal_time')->getData());
                 $reservation->setMealTime($date);
+
                 $reservation->setAllergie($form->get('allergie')->getData());
 
                 foreach ($form->get('allergies')->getData() as $formAllergie){

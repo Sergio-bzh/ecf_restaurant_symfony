@@ -102,7 +102,7 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'mapped' => true,
+                'mapped' => false,
                 'label' => 'Creneaux',
                 'required' => true,
                 'choices' => $options['allCreneaux']
