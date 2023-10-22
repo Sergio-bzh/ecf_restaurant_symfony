@@ -6,9 +6,14 @@ body {
 }
 
 .footer {
-    margin-top: 30px auto;
+    margin-top: auto;
 }
 
 .toto {
     display: none;
 }
+
+/*
+#reservation_meal_time option {
+    display: none;
+}*/

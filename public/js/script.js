@@ -36,7 +36,7 @@ async function getCreneaux() {
     const CAPACITE = 50
     let allValeurs = [0, 0, 0]
     let indiceCumulPlaces = 3
-    select.innerHTML = ''
+//    select.innerHTML = ''
 
 // Boucle pour obtenir les heures à afficher dans le formulaire
     for (let dateH = creneaux.service_start.substring(11, 13); dateH < creneaux.service_end.substring(11, 13) ; dateH++) {

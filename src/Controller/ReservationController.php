@@ -8,7 +8,7 @@ use App\Form\ReservationType;
 use App\Repository\AllergieRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\RestaurantRepository;
-use App\Security\Service\ScheduleService;
+use App\Service\ScheduleService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +23,22 @@ class ReservationController extends AbstractController
         RestaurantRepository $restaurantRepository, ReservationRepository $reservationRepository,
         Request $request, EntityManagerInterface  $em): Response
     {
-        $form = $this->createForm(ReservationType::class);
+// Création d'un tableau pour contenir l'ensemble des quarts d'heures de la journée
+        $allCreneaux = [];
+        $allCreneaux[''] = '';
+        for ($hour = 0 ; $hour <= 23; $hour++) {
+            $allCreneaux[$hour.':00'] = $hour.':0';
+            $allCreneaux[$hour.':15'] = $hour.':1';
+            $allCreneaux[$hour.':30'] = $hour.':2';
+            $allCreneaux[$hour.':45'] = $hour.':3';
+        }
+
+// L'option allCreneaux contient les options qui sont injectées dans le champs "meal_time" du ReservationType.php
+
+        $form = $this->createForm(ReservationType::class,null, ['allCreneaux' => $allCreneaux]);
 
         if ($request->isMethod('POST')) {
+            dd($request, '< ==================================================== >');
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
 
@@ -37,7 +50,6 @@ class ReservationController extends AbstractController
                 $reservation->setReservationDate($form->get('reservation_date')->getData());
                 $meal_time = str_replace(' ', '', $form->get('meal_time')->getData());
                 $date = new DateTimeImmutable($meal_time);
-                dd($date, '< ==================================================== >');
 //                echo $date->format('Y-m-d H:i:s');
                 $reservation->setMealTime($date);
                 $reservation->setAllergie($form->get('allergie')->getData());
