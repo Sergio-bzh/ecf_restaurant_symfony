@@ -6,9 +6,9 @@ body {
 }
 
 .footer {
-    margin-top: 30px auto;
+    margin-top: auto;
 }
 
-.toto {
+#allergies_list, #reservation_meal_time option {
     display: none;
 }

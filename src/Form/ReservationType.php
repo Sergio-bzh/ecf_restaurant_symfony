@@ -102,8 +102,11 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
+
+                'mapped' => false,
                 'label' => 'Creneaux',
-                'required' => true
+                'required' => true,
+                'choices' => $options['allCreneaux']
             ])
 
             ->add('validation', SubmitType::class, [
@@ -153,6 +156,7 @@ class ReservationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reservation::class,
+            'allCreneaux' => []
         ]);
     }
 }

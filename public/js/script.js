@@ -1,11 +1,20 @@
+/*
+let allergiesList = document.getElementById('reservation_allergies')
+let option = document.createElement('option')
+option.innerText = 'Travail'
+allergiesList.append(option)
+*/
 
-    const ALLERGIES = window.document.getElementById('allergies_list')
-    ALLERGIES.style.display = 'none'
+// TODO : Géréer les heures début/fin de service dans les tranches horaires intermédiaires histoire des 3/4 d'heures
+// TODO : Ne pas afficher la dernière heure de service
+// TODO : Bloquer la possibilité de choisir un jour passé
 
+let selector = window.document.getElementsByName('reservation[allergies]')
+let premierPassage = true
 
 function toggleAllergies() {
     const ALLERGIE_CHECKBOX_FIELD = window.document.getElementById('reservation_allergie')
-
+    const ALLERGIES = window.document.getElementById('allergies_list')
     if(!ALLERGIE_CHECKBOX_FIELD.checked) {
         ALLERGIES.style.display = 'none'
     }
@@ -14,45 +23,60 @@ function toggleAllergies() {
     }
 }
 
-
 async function getCreneaux() {
-        const date = window.document.getElementById('reservation_reservation_date')
-        const service = window.document.getElementById('reservation_service')
-        let guest_number = window.document.getElementById('reservation_guest_number')
+    const date = window.document.getElementById('reservation_reservation_date')
+    const service = window.document.getElementById('reservation_service')
+    let guest_number = window.document.getElementById('reservation_guest_number')
+    let select = window.document.getElementById('reservation_meal_time')
 
-        //console.log(date.value)
-        //console.log(service.value)
-        const response = await fetch(`https://localhost:8000/api/timeSlice?date=${date.value}&service=${service.value}`)
-        creneaux = await response.json()
+//  Appel à l'API Back-End en dur pour les tests sur LOCALHOST !!
+    const response = await fetch(`https://localhost:8000/api/timeSlice?date=${date.value}&service=${service.value}`)
+    const creneaux = await response.json()
+console.log(creneaux)
+    const CAPACITE = 50
+    let allValeurs = [0, 0, 0]
+    let indiceCumulPlaces = 3
 
-        //console.log(Date.parse(creneaux.service_start), Date.parse(creneaux.service_end))
+//  Constante créé à partir du tableau des quart d'heures (96 balise option) présentes dans le DOM
+    const ALLCRENEAUX = window.document.getElementById('reservation_meal_time').getElementsByTagName('option');
 
-        for (let dateH = Date.getUTCHours(Date.parse(creneaux.service_start)) ; dateH <= Date.getUTCHours(Date.parse(creneaux.service_end)) ; dateH++) {
-            console.log(dateH)
-            let quartHeure = 0
-            let convives = 0
-            while (quartHeure <= 3) {
-                //convives = creneaux.creneaux[].places_reservees
-                if(convives > 0 && convives <= 50 ) {
-                    convives = creneaux.creneaux[0].places_reservees
-                    convives += guest_number
-                    console.log(convives, quartHeure)
-                }
-                quartHeure++
+// Boucle pour masquer les 96 balises option avant d'obtenir les heures à afficher dans le formulaire
+    if (!premierPassage) {
+        for (option of ALLCRENEAUX)
+           option.style.display = 'none'
+    }
+    premierPassage = false
+
+    let debutService = parseInt(creneaux.service_start.substring(11, 13))
+    let finService = parseInt(creneaux.service_end.substring(11, 13))
+
+// Boucle pour obtenir les heures à afficher dans le formulaire
+    for (let dateH = creneaux.service_start.substring(11, 13); dateH < creneaux.service_end.substring(11, 13) ; dateH++) {
+        let quartHeure = 0
+
+// Boucle pour obtenir les quarts d'heures à afficher dans le formulaire
+        while (quartHeure <= 3) {
+            let places_prises = 0
+            if (creneaux[dateH + ':' + quartHeure]) {
+                places_prises = parseInt(creneaux[dateH + ':' + quartHeure].places_reservees)
             }
+
+            allValeurs.push(places_prises)
+            console.log(indiceCumulPlaces,allValeurs)
+
+            if((allValeurs[indiceCumulPlaces]) != null && places_prises + parseInt(guest_number.value) + allValeurs[indiceCumulPlaces-1] + allValeurs[indiceCumulPlaces-2] + allValeurs[indiceCumulPlaces-3] <= CAPACITE ) {
+                ALLCRENEAUX[((debutService * 4) - 2) + indiceCumulPlaces].style.display = 'block';
+            }
+            quartHeure++
+            indiceCumulPlaces++
         }
-
-
+    }
 }
-//Envoyer à la base le Service et jour au back-end
-    //Le controleur récupère les résas pour ce jour et ce service
-    // Le controleur envoie le tableau au front
-// Le front boucle pour afficher les créneau disponibles avec le nombre de places tant que le nombre de convives < 50
 
+/*
+ReMasquer les creneaux :
+Si guest_number change recalcule
 
-
-//Récupérer le nombre des places par créneaux back-end
-
-// Chercher les heures d'ouverture et fermeture
-
-//Calculer les créneaux
+Si service change recalcule
+Si date change recalcule
+*/
