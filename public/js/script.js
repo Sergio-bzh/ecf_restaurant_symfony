@@ -10,7 +10,45 @@ allergiesList.append(option)
 // TODO : Bloquer la possibilité de choisir un jour passé
 
 let selector = window.document.getElementsByName('reservation[allergies]')
+const date = window.document.getElementById('reservation_reservation_date')
+let allCreneaux = window.document.getElementById('reservation_meal_time').getElementsByTagName('option');
+let service = window.document.getElementById('reservation_service')
+service.style.display = 'none'
 let premierPassage = true
+
+function masqueBalises () {
+// Fonction pour masquer les 96 balises option du DOM
+    if (!premierPassage) {
+        for (let option of allCreneaux){
+            option.style.display = 'none'
+        }
+        allCreneaux[0].style.display = 'block'
+    }
+    premierPassage = false
+}
+
+
+// Condition servant à empêcher le choix de dates déja écoulées ou de choisir un créneau si la date n'est pas correcte
+if(date) {
+    date.addEventListener("change", function (evenement) {
+        evenement.preventDefault();
+        let today = new Date().toISOString().substring(0, 10);
+        todayParsed = Date.parse(today)
+        dateParsed = Date.parse(date.value)
+        console.log(today);
+        console.log(date.value)
+
+        masqueBalises()
+
+        if (dateParsed < todayParsed || date.value === '') {
+            console.log('Veuillez choisir la date d\'aujourd\'hui '+'(' + today + ')' +' ou une date à venir')
+            service.style.display = 'none'
+        } else {
+            service.style.display = 'block'
+            getCreneaux();
+        }
+    })
+}
 
 function toggleAllergies() {
     const ALLERGIE_CHECKBOX_FIELD = window.document.getElementById('reservation_allergie')
@@ -24,28 +62,15 @@ function toggleAllergies() {
 }
 
 async function getCreneaux() {
-    const date = window.document.getElementById('reservation_reservation_date')
-    const service = window.document.getElementById('reservation_service')
     let guest_number = window.document.getElementById('reservation_guest_number')
     let select = window.document.getElementById('reservation_meal_time')
 
 //  Appel à l'API Back-End en dur pour les tests sur LOCALHOST !!
     const response = await fetch(`https://localhost:8000/api/timeSlice?date=${date.value}&service=${service.value}`)
     const creneaux = await response.json()
-console.log(creneaux)
     const CAPACITE = 50
     let allValeurs = [0, 0, 0]
     let indiceCumulPlaces = 3
-
-//  Constante créé à partir du tableau des quart d'heures (96 balise option) présentes dans le DOM
-    const ALLCRENEAUX = window.document.getElementById('reservation_meal_time').getElementsByTagName('option');
-
-// Boucle pour masquer les 96 balises option avant d'obtenir les heures à afficher dans le formulaire
-    if (!premierPassage) {
-        for (option of ALLCRENEAUX)
-           option.style.display = 'none'
-    }
-    premierPassage = false
 
     let debutService = parseInt(creneaux.service_start.substring(11, 13))
     let finService = parseInt(creneaux.service_end.substring(11, 13))
@@ -65,7 +90,7 @@ console.log(creneaux)
             console.log(indiceCumulPlaces,allValeurs)
 
             if((allValeurs[indiceCumulPlaces]) != null && places_prises + parseInt(guest_number.value) + allValeurs[indiceCumulPlaces-1] + allValeurs[indiceCumulPlaces-2] + allValeurs[indiceCumulPlaces-3] <= CAPACITE ) {
-                ALLCRENEAUX[((debutService * 4) - 2) + indiceCumulPlaces].style.display = 'block';
+                allCreneaux[((debutService * 4) - 2) + indiceCumulPlaces].style.display = 'block';
             }
             quartHeure++
             indiceCumulPlaces++
