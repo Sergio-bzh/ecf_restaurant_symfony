@@ -16,8 +16,8 @@ let service = window.document.getElementById('reservation_service')
 service.style.display = 'none'
 let premierPassage = true
 
-function masqueBalises () {
 // Fonction pour masquer les 96 balises option du DOM
+function masqueBalises () {
     if (!premierPassage) {
         for (let option of allCreneaux){
             option.style.display = 'none'
@@ -89,7 +89,11 @@ async function getCreneaux() {
             allValeurs.push(places_prises)
             console.log(indiceCumulPlaces,allValeurs)
 
-            if((allValeurs[indiceCumulPlaces]) != null && places_prises + parseInt(guest_number.value) + allValeurs[indiceCumulPlaces-1] + allValeurs[indiceCumulPlaces-2] + allValeurs[indiceCumulPlaces-3] <= CAPACITE ) {
+            if((allValeurs[indiceCumulPlaces]) != null && places_prises
+                + parseInt(guest_number.value)
+                + allValeurs[indiceCumulPlaces-1]
+                + allValeurs[indiceCumulPlaces-2]
+                + allValeurs[indiceCumulPlaces-3] <= CAPACITE ) {
                 allCreneaux[((debutService * 4) - 2) + indiceCumulPlaces].style.display = 'block';
             }
             quartHeure++
