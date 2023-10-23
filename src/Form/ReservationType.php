@@ -79,7 +79,7 @@ class ReservationType extends AbstractType
             ->add('reservation_date', DateType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3',
-                    'onChange' => 'getCreneaux();'
+//                    'onChange' => 'getCreneaux();'
                 ],
                 'widget' => 'single_text',
                 'label' => 'Date',
