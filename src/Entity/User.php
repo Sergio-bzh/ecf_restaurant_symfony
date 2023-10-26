@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\Column]
+    private ?int $guest_number = null;
+
     public function __construct()
     {
         $this->allergies = new ArrayCollection();
@@ -213,5 +216,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->getLastName() . ' ' . $this->getFirstName() . ' '. $this->getPhoneNumber();
         // TODO: Implement __toString() method.
+    }
+
+    public function getGuestNumber(): ?int
+    {
+        return $this->guest_number;
+    }
+
+    public function setGuestNumber(int $guest_number): static
+    {
+        $this->guest_number = $guest_number;
+
+        return $this;
     }
 }

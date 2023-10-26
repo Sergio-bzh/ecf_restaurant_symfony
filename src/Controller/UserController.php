@@ -32,7 +32,7 @@ class UserController extends AbstractController
                 $user->setUser($form->get('first_name')->getData());
                 $user->setUser($form->get('phone_number')->getData());
                 $user->setUser($form->get('allergies')->getData());
-//                $user->setUser($form->get('guest_number')->getData());
+                $user->setUser($form->get('guest_number')->getData());
 
                 $user->setAllergie($form->get('allergie')->getData());
 
