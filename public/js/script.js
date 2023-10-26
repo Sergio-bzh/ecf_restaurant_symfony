@@ -8,6 +8,7 @@ allergiesList.append(option)
 // TODO : Géréer les heures début/fin de service dans les tranches horaires intermédiaires histoire des 3/4 d'heures
 // TODO : Ne pas afficher la dernière heure de service
 // TODO : Bloquer la possibilité de choisir un jour passé
+// TODO : Vérifier si la checkbox allergie est cochée (REVOIR la fonction "toggleAllergies")
 
 let selector = window.document.getElementsByName('reservation[allergies]')
 const date = window.document.getElementById('reservation_reservation_date')
@@ -35,13 +36,13 @@ if(date) {
         let today = new Date().toISOString().substring(0, 10);
         todayParsed = Date.parse(today)
         dateParsed = Date.parse(date.value)
-        console.log(today);
-        console.log(date.value)
+//        console.log(today);
+//        console.log(date.value)
 
         masqueBalises()
 
         if (dateParsed < todayParsed || date.value === '') {
-            console.log('Veuillez choisir la date d\'aujourd\'hui '+'(' + today + ')' +' ou une date à venir')
+//            console.log('Veuillez choisir la date d\'aujourd\'hui '+'(' + today + ')' +' ou une date à venir')
             service.style.display = 'none'
         } else {
             service.style.display = 'block'

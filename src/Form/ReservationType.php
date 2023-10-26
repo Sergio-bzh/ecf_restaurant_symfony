@@ -1,5 +1,8 @@
 <?php
 
+// TODO : réinitialiser les champs du formulaire
+// TODO : Mettre la date du jour par défaut
+
 namespace App\Form;
 
 use App\Entity\Allergie;
@@ -70,7 +73,8 @@ class ReservationType extends AbstractType
 
             ->add('guest_number', IntegerType::class, [
                 'attr' => [
-                    'class' => 'form-control mb-3'
+                    'class' => 'form-control mb-3',
+                    'min' => 1
                 ],
                 'label' => 'Nombre de couverts :',
                 'required' => true
