@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <h2 class="mb-4 text-center">Inscription</h2>
+
+
+    {{ form_start(form) }}
+    <div class="d-flex flex-column align-items-lg-center">
+        <div class="col col-lg-6 ms-5 me-5">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            <br>
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+            <br>
+{#             {{ form_label(form.repeatPassword) }} #}
+{#             {{ form_widget(form.repeatPassword) }} #}
+            <br>
+            {{ form_label(form.first_name) }}
+            {{ form_widget(form.first_name) }}
+            <br>
+            {{ form_label(form.last_name) }}
+            {{ form_widget(form.last_name) }}
+            <br>
+            {{ form_label(form.phone_number) }}
+            {{ form_widget(form.phone_number) }}
+            <br>
+            {{ form_label(form.guest_number) }}
+            {{ form_widget(form.guest_number) }}
+
+            <div class="d-flex">
+                <div class="col col-2 me-5">
+                    {{ form_label(form.allergies) }}
+                    {{ form_widget(form.allergies) }}
+                </div>
+                <div class="col col-10 ms-5 me-0 mt-5">
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Envoyer
+                    </button>
+                </div>
+            </div>
+            <div class="d-none">
+                {{ form_label(form.roles) }}
+                {{ form_widget(form.roles) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+
+</div>
+
+
+{% endblock %}
