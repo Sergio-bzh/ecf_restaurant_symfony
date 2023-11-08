@@ -18,6 +18,16 @@
                 <li><a class="dropdown-item" href="/accueil">Accueil</a></li>
                 <li><a class="dropdown-item" href="#">La carte</a></li>
                 <li><a class="dropdown-item" href="#">Menu gastronomique</a></li>
+
+                <div class="d-flex flex-column text-end px-4">
+                    {% if not app.user %}
+                        <button onclick="location.href='/login'" type="button" class="btn btn-outline-primary mt-2 mb-2">Se connecter</button>
+                        <button onclick="location.href='/user'" type="button" class="btn btn-primary">S'inscrire</button>
+                    {% else %}
+                        <button onclick="location.href='{{ path('app_logout') }}'" type="button" class="btn btn-outline-danger">Se déconnecter</button>
+                    {% endif %}
+                </div>
+
             </ul>
         </div>
 
@@ -39,7 +49,7 @@
         <div class="d-none d-lg-flex col-md-3 text-end px-lg-4">
             {% if not app.user %}
                 <button onclick="location.href='/login'" type="button" class="btn btn-outline-primary me-2">Se connecter</button>
-                <button type="button" class="btn btn-primary">S'inscrire</button>
+                <button onclick="location.href='/user'" type="button" class="btn btn-primary">S'inscrire</button>
                 {% else %}
                 <button onclick="location.href='{{ path('app_logout') }}'" type="button" class="btn btn-outline-danger me-2">Se déconnecter</button>
             {% endif %}
